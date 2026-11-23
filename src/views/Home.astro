@@ -10,8 +10,8 @@ const recent = published.filter((post) => post !== feature).slice(0, 5);
 <Site>
   <section class="hero">
     <div class="hero-copy">
-      <h1>Berry Chen<span>.</span></h1>
-      <p>{english ? "Embrace every moment and enjoy the journey!" : <>记录学到的东西，<br class="hero-break" />也记录生活里的小事。</>}</p>
+      <h1>Berry<span>.</span></h1>
+      <p>{english ? "Embrace every moment and enjoy the journey!" : "岁月本长，而忙者自促；天地本宽，而鄙者自隘；风花雪月本闲，而劳攘者自冗。"}</p>
       <div class="hero-actions">
         <a class="button primary" href={localizedPath('/notes/', lang)}>{english ? 'Read notes' : '读学习笔记'}</a>
         <a class="button plain" href={localizedPath('/journal/', lang)}>{english ? t.journal : '读随笔'}</a>
@@ -19,7 +19,7 @@ const recent = published.filter((post) => post !== feature).slice(0, 5);
       </div>
     </div>
     <div class="portrait-frame">
-      <img src="/assets/img/avatar.png" alt={english ? 'Berry Chen’s avatar' : 'Berry Chen 的头像'} width="240" height="240" fetchpriority="high" />
+      <img src="/assets/img/avatar.png" alt={english ? 'Berry’s avatar' : 'Berry 的头像'} width="240" height="240" fetchpriority="high" />
     </div>
   </section>
 

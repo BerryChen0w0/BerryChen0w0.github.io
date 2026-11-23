@@ -23,6 +23,14 @@ npm run build
 
 在仓库的 **Settings → Pages** 中选择 **GitHub Actions** 作为发布来源。推送到 `main` 后，工作流会构建并发布 `dist/`。
 
+## 访问统计
+
+1. 在 [Cloudflare Web Analytics](https://dash.cloudflare.com/?to=/:account/web-analytics) 中添加 `berrychen0w0.github.io`，打开 **Manage site**，复制统计脚本里 `token` 的值。
+2. 在 [GitHub 仓库的 Actions Variables](https://github.com/BerryChen0w0/BerryChen0w0.github.io/settings/variables/actions) 新建仓库变量 `PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN`，填入该值。它是公开的站点标识，会写入发布后的 HTML。
+3. 推送到 `main`，或在 Actions 中手动运行 **Build and Deploy**。部署后可在 Cloudflare 仪表盘查看访问数据。
+
+变量留空时，构建会省略统计脚本。开发预览、PR 构建和 404 页面也会省略脚本。
+
 ## 站点语言
 
 默认网址显示中文界面，`/en/` 下的对应网址显示英文界面。导航栏里的语言入口会打开当前页面的另一语言版本。同一篇笔记、随笔仍使用同一份 Markdown，两个界面都展示原文。研究页正文随界面语言切换。

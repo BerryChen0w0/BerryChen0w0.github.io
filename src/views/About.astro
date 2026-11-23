@@ -7,7 +7,7 @@ const { lang, english, t } = language(Astro.url.pathname);
 <Site title={t.about}>
   <div class="page-head"><h1>{t.about}</h1></div>
   <div class="about-panel">
-    <img src="/assets/img/avatar.png" alt={english ? 'Berry Chen’s avatar' : 'Berry Chen 的头像'} width="112" height="112" />
+    <img src="/assets/img/avatar.png" alt={english ? 'Berry’s avatar' : 'Berry 的头像'} width="112" height="112" />
     <div>
       <h2>{english ? 'Hi, I’m Berry.' : '你好，我是 Berry。'}</h2>
       <p>{english ? 'I started this site in 2024 to keep notes on zero-knowledge proofs. I also write about software development and everyday life.' : '这个站从 2024 年开始，用来记录我学习零知识证明时做的笔记，也放一些开发记录和生活随笔。'}</p>

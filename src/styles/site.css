@@ -157,9 +157,6 @@ time { font-variant-numeric: tabular-nums; }
 .footer { margin-top: 4rem; border-top: 1px solid var(--rule); }
 .footer-inner { min-height: 4.8rem; font-size: .9rem; color: var(--muted); }
 
-@media (min-width: 47rem) {
-  .hero-break { display: none; }
-}
 @media (max-width: 50rem) {
   .article-grid.has-toc { grid-template-columns: minmax(0, 47rem); }
   .toc { display: none; }

@@ -27,6 +27,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN || '' }}
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         with:

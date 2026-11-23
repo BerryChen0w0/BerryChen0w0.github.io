@@ -6,8 +6,9 @@ import { language, localizedPath } from '../lib/locale.js';
 const path = Astro.url.pathname;
 const { lang, english, t } = language(path);
 const { title, description = t.description, missing = false } = Astro.props;
-const siteTitle = title ? title + ' · Berry Chen' : 'Berry Chen';
+const siteTitle = title ? title + ' · Berry' : 'Berry';
 const canonical = new URL(path, Astro.site);
+const analyticsToken = import.meta.env.PROD && !missing && import.meta.env.PUBLIC_CLOUDFLARE_WEB_ANALYTICS_TOKEN?.trim();
 const switchLang = english ? 'zh-CN' : 'en';
 const switchPath = missing ? (english ? '/404.html' : '/en/404/') : localizedPath(path, switchLang);
 const nav = [['/', t.home], ['/notes/', t.notes], ['/journal/', t.journal], ['/research/', t.research], ['/about/', t.about]];
@@ -28,7 +29,7 @@ const nav = [['/', t.home], ['/notes/', t.notes], ['/journal/', t.journal], ['/r
     <a class="skip" href="#main">{t.skip}</a>
     <header class="header">
       <div class="wrap header-inner">
-        <a class="brand" href={localizedPath('/', lang)}><span class="brand-mark" aria-hidden="true">B</span> Berry Chen</a>
+        <a class="brand" href={localizedPath('/', lang)}><span class="brand-mark" aria-hidden="true">B</span> Berry</a>
         <nav aria-label={t.navigation}>
           {nav.map(([href, label]) => {
             const target = localizedPath(href, lang);
@@ -42,9 +43,17 @@ const nav = [['/', t.home], ['/notes/', t.notes], ['/journal/', t.journal], ['/r
     <main class="wrap" id="main"><slot /></main>
     <footer class="footer">
       <div class="wrap footer-inner">
-        <span>© {new Date().getFullYear()} Berry Chen</span>
+        <span>© {new Date().getFullYear()} Berry</span>
         <a href={repo}>GitHub</a>
       </div>
     </footer>
+    {analyticsToken && (
+      <script
+        is:inline
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: analyticsToken })}
+      ></script>
+    )}
   </body>
 </html>

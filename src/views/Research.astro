@@ -5,8 +5,8 @@ import { googleScholar } from '../lib/profile.js';
 
 const { english, t } = language(Astro.url.pathname);
 const description = english
-  ? 'Berry Chen’s research interests in zero-knowledge proofs and verifiable computation, and a link to publications.'
-  : 'Berry Chen 的研究兴趣包括零知识证明和可验证计算。可通过 Google 学术查看论文。';
+  ? 'Berry’s research interests in zero-knowledge proofs and verifiable computation, and a link to publications.'
+  : 'Berry 的研究兴趣包括零知识证明和可验证计算。可通过 Google 学术查看论文。';
 ---
 <Site title={t.research} description={description}>
   <header class="page-head"><h1>{t.research}</h1></header>
