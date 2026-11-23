@@ -1,0 +1,27 @@
+---
+import Site from '../layouts/Site.astro';
+import { language, localizedPath } from '../lib/locale.js';
+import { googleScholar } from '../lib/profile.js';
+const { lang, english, t } = language(Astro.url.pathname);
+---
+<Site title={t.about}>
+  <div class="page-head"><h1>{t.about}</h1></div>
+  <div class="about-panel">
+    <img src="/assets/img/avatar.png" alt={english ? 'Berry Chen’s avatar' : 'Berry Chen 的头像'} width="112" height="112" />
+    <div>
+      <h2>{english ? 'Hi, I’m Berry.' : '你好，我是 Berry。'}</h2>
+      <p>{english ? 'I started this site in 2024 to keep notes on zero-knowledge proofs. I also write about software development and everyday life.' : '这个站从 2024 年开始，用来记录我学习零知识证明时做的笔记，也放一些开发记录和生活随笔。'}</p>
+      <blockquote>{english ? 'It’s never too early, and it’s never too late.' : '永远不要觉得为时尚早，永远不要觉得为时已晚。'}</blockquote>
+      <ul class="about-links" aria-label={english ? 'Profile links' : '个人链接'}>
+        <li><a href="https://github.com/BerryChen0w0">GitHub</a></li>
+        <li><a href={googleScholar}>Google Scholar</a></li>
+        <li><a href={localizedPath('/research/', lang)}>{t.research}</a></li>
+      </ul>
+      <section class="about-wechat" aria-labelledby="wechat-account">
+        <h3 id="wechat-account">{english ? 'WeChat Official Account' : '微信公众号'}</h3>
+        <p><strong lang="zh-CN">Berry说什么呢</strong> <span>{english ? 'Search WeChat for' : '微信内搜索'} <b>BerryWander</b></span></p>
+        <a href="https://mp.weixin.qq.com/s/Q8hsT9dDv00WWAQpJWQnSQ">{english ? 'Read an article on WeChat' : '读一篇公众号文章'}</a>
+      </section>
+    </div>
+  </div>
+</Site>

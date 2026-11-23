@@ -1,0 +1,46 @@
+---
+import { categoryLabel, language, localizedPath } from '../lib/locale.js';
+const { lang, english } = language(Astro.url.pathname);
+const label = (name) => categoryLabel(name, lang);
+const { children, selected } = Astro.props;
+const items = [...children.values()].sort((a, b) => label(a.name).localeCompare(label(b.name), lang));
+---
+<ul class="note-tree">
+  {items.map((category) => {
+    const name = label(category.name);
+    const branchId = `note-branch-${category.url}`;
+    const hasChildren = category.children.size > 0;
+    return (
+      <li>
+        <div class="note-tree-row">
+          {hasChildren && (
+            <button type="button" class="note-tree-toggle" aria-label={english ? `Subtopics for ${name}` : `${name}的子目录`}
+              aria-controls={branchId} aria-expanded={selected !== category.url && selected.startsWith(category.url)} hidden>
+              <span aria-hidden="true"></span>
+            </button>
+          )}
+          <a href={localizedPath(category.url, lang)} aria-current={selected === category.url ? 'page' : undefined}>{name}</a>
+        </div>
+        {hasChildren && (
+          <div class="note-tree-branch" id={branchId}>
+            <Astro.self children={category.children} selected={selected} />
+          </div>
+        )}
+      </li>
+    );
+  })}
+</ul>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.note-tree-toggle').forEach((button) => {
+    const branch = document.getElementById(button.getAttribute('aria-controls') ?? '');
+    if (!branch) return;
+
+    branch.hidden = button.getAttribute('aria-expanded') !== 'true';
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      branch.hidden = !branch.hidden;
+      button.setAttribute('aria-expanded', String(!branch.hidden));
+    });
+  });
+</script>

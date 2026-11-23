@@ -1,0 +1,22 @@
+---
+import { language, localizedPath } from '../lib/locale.js';
+const { lang, t } = language(Astro.url.pathname);
+const { posts, showSection = true, showUpdated = false, empty = t.empty } = Astro.props;
+---
+{posts.length ? (
+  <ul class="post-list">
+    {posts.map(({ title, url, date, updated, section, contentLang }) => (
+      <li>
+        <a href={localizedPath(url, lang)}>
+          <span class="post-list-title" lang={contentLang}>{title}</span>
+          <span class="post-list-meta">
+            {showSection && <span>{t[section]}</span>}
+            {showUpdated && updated
+              ? <time datetime={updated}>{updated}</time>
+              : date && <time datetime={date}>{date}</time>}
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+) : <p class="empty">{empty}</p>}

@@ -1,0 +1,37 @@
+---
+import Site from '../layouts/Site.astro';
+import { language, localizedPath } from '../lib/locale.js';
+import { renderPost } from '../lib/content.js';
+
+const { post } = Astro.props;
+const { lang, t } = language(Astro.url.pathname);
+const { html, headings } = await renderPost(post, lang);
+---
+<Site title={post.title}>
+  <div class:list={['article-grid', { 'has-toc': headings.length >= 3 }]}>
+    <article>
+      <header class="page-head article-head">
+        <a class="section-link" href={localizedPath('/' + post.section + '/', lang)}>{t[post.section]}</a>
+        <h1 lang={post.contentLang}>{post.title}</h1>
+        <div class="article-meta">
+          {post.date && <time datetime={post.date}>{post.date}</time>}
+          {post.updated && <span>{t.updated} <time datetime={post.updated}>{post.updated}</time></span>}
+          {post.history && <a href={post.history}>{t.history}</a>}
+        </div>
+      </header>
+      <div class="prose" lang={post.contentLang} set:html={html}></div>
+    </article>
+    {headings.length >= 3 && (
+      <aside class="toc">
+        <nav aria-label={t.articleContents}>
+          <h2>{t.contents}</h2>
+          <ul>
+            {headings.map(({ id, label, depth }) =>
+              <li class:list={[{ nested: depth === 3 }]}><a href={'#' + id} lang={post.contentLang}>{label}</a></li>
+            )}
+          </ul>
+        </nav>
+      </aside>
+    )}
+  </div>
+</Site>

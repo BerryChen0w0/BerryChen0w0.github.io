@@ -1,0 +1,11 @@
+---
+import Site from '../layouts/Site.astro';
+import PostList from '../components/PostList.astro';
+import { language } from '../lib/locale.js';
+import { published } from '../lib/content.js';
+const { t } = language(Astro.url.pathname);
+---
+<Site title={t.journal}>
+  <div class="page-head"><h1>{t.journal}</h1><p>{t.journalDescription}</p></div>
+  <PostList posts={published.filter((post) => post.section === 'journal')} />
+</Site>

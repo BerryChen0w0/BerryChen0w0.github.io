@@ -1,0 +1,14 @@
+---
+import NotesBrowser from '../../components/NotesBrowser.astro';
+import { categories } from '../../lib/note-categories.js';
+
+export function getStaticPaths() {
+  return categories.map((current) => ({
+    params: { category: current.path.join('/') },
+    props: { current },
+  }));
+}
+
+const { current } = Astro.props;
+---
+<NotesBrowser current={current} />

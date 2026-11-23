@@ -1,61 +1,28 @@
-# Chirpy Starter
+# Berry Chen 的个人主页
 
-[![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
-[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
+[berrychen0w0.github.io](https://berrychen0w0.github.io) 使用 Astro 构建，由 GitHub Pages 发布。
 
-When installing the [**Chirpy**][chirpy] theme through [RubyGems.org][gem], Jekyll can only read files in the folders
-`_data`, `_layouts`, `_includes`, `_sass` and `assets`, as well as a small part of options of the `_config.yml` file
-from the theme's gem. If you have ever installed this theme gem, you can use the command
-`bundle info --path jekyll-theme-chirpy` to locate these files.
+## 写作和发布
 
-The Jekyll team claims that this is to leave the ball in the user’s court, but this also results in users not being
-able to enjoy the out-of-the-box experience when using feature-rich themes.
+- 草稿存放在公开仓库之外，或者放在 Git 已忽略的 `_drafts-local/`。原仓库的草稿已在当前工作区移到这个目录，本地草稿请另行备份。
+- 准备发布时，将 Markdown 放进 `content/notes/`（笔记）或 `content/journal/`（随笔）。文件名不需要日期或固定格式，正文的首个一级标题可用作文章标题。没有一级标题时使用文件名。
+- `content/notes/` 下的子目录会自动显示在笔记分类树中，例如 `content/notes/零知识证明/电路与约束/`。目录名用作分类名。
+- 配图可以和文章放在同一目录，用 `![图片说明](./picture.jpg)` 引用。笔记支持行内 `$…$`、独立 `$$` 数学块、表格和脚注。
+- 新文章的展示日期取 Git 中第一次提交该文件的日期，之后的内容变更可显示更新日期。首次提交前的本地预览可省略日期。文章目录和文件名决定网址，已经分享的文章改名时需要同时保留原网址。
+- 历史文章保存在 `_posts/`，保留旧网址和原文。已有的日期优先用于显示。这也是唯一仍需解析 Jekyll 写法的目录。
 
-To fully use all the features of **Chirpy**, you need to copy the other critical files from the theme's gem to your
-Jekyll site. The following is a list of targets:
+## 本地预览
 
-```shell
-.
-├── _config.yml
-├── _plugins
-├── _tabs
-└── index.html
+使用 Node 24（例如 `nvm use`）。
+
+```sh
+npm ci
+npm run dev
+npm run build
 ```
 
-To save you time, and also in case you lose some files while copying, we extract those files/configurations of the
-latest version of the **Chirpy** theme and the [CD][CD] workflow to here, so that you can start writing in minutes.
+在仓库的 **Settings → Pages** 中选择 **GitHub Actions** 作为发布来源。推送到 `main` 后，工作流会构建并发布 `dist/`。
 
-## Prerequisites
+## 站点语言
 
-Follow the instructions in the [Jekyll Docs](https://jekyllrb.com/docs/installation/) to complete the installation of
-the basic environment. [Git](https://git-scm.com/) also needs to be installed.
-
-## Installation
-
-Sign in to GitHub and [**use this template**][use-template] to generate a brand new repository and name it
-`USERNAME.github.io`, where `USERNAME` represents your GitHub username.
-
-Then clone it to your local machine and run:
-
-```console
-$ bundle
-```
-
-## Usage
-
-Please see the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy#documentation).
-
-## Contributing
-
-The contents of this repository are automatically updated when new releases are made to the [main repository][chirpy].  
-If you have problems using it, or would like to participate in improving it, please go to the main repository for feedback!
-
-## License
-
-This work is published under [MIT][mit] License.
-
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
-[use-template]: https://github.com/cotes2020/chirpy-starter/generate
-[CD]: https://en.wikipedia.org/wiki/Continuous_deployment
-[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+默认网址显示中文界面，`/en/` 下的对应网址显示英文界面。导航栏里的语言入口会打开当前页面的另一语言版本。同一篇笔记、随笔仍使用同一份 Markdown，两个界面都展示原文。研究页正文随界面语言切换。

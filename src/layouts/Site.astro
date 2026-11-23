@@ -1,0 +1,50 @@
+---
+import '../styles/site.css';
+import { repo } from '../lib/content.js';
+import { language, localizedPath } from '../lib/locale.js';
+
+const path = Astro.url.pathname;
+const { lang, english, t } = language(path);
+const { title, description = t.description, missing = false } = Astro.props;
+const siteTitle = title ? title + ' · Berry Chen' : 'Berry Chen';
+const canonical = new URL(path, Astro.site);
+const switchLang = english ? 'zh-CN' : 'en';
+const switchPath = missing ? (english ? '/404.html' : '/en/404/') : localizedPath(path, switchLang);
+const nav = [['/', t.home], ['/notes/', t.notes], ['/journal/', t.journal], ['/research/', t.research], ['/about/', t.about]];
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f6f8f4" />
+    <link rel="canonical" href={canonical} />
+    {!missing && <link rel="alternate" hreflang={switchLang} href={new URL(switchPath, Astro.site)} />}
+    <link rel="icon" href="/assets/img/avatar.png" />
+    <title>{siteTitle}</title>
+  </head>
+  <body>
+    <a class="skip" href="#main">{t.skip}</a>
+    <header class="header">
+      <div class="wrap header-inner">
+        <a class="brand" href={localizedPath('/', lang)}><span class="brand-mark" aria-hidden="true">B</span> Berry Chen</a>
+        <nav aria-label={t.navigation}>
+          {nav.map(([href, label]) => {
+            const target = localizedPath(href, lang);
+            const current = path === target ? 'page' : href === '/notes/' && path.startsWith(target) ? 'location' : undefined;
+            return <a href={target} aria-current={current}>{label}</a>;
+          })}
+        </nav>
+        <a class="language-switch" lang={switchLang} hreflang={switchLang} href={switchPath}>{english ? '中文' : 'English'}</a>
+      </div>
+    </header>
+    <main class="wrap" id="main"><slot /></main>
+    <footer class="footer">
+      <div class="wrap footer-inner">
+        <span>© {new Date().getFullYear()} Berry Chen</span>
+        <a href={repo}>GitHub</a>
+      </div>
+    </footer>
+  </body>
+</html>

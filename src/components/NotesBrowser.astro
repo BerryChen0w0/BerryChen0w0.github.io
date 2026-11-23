@@ -1,0 +1,31 @@
+---
+import Site from '../layouts/Site.astro';
+import { categoryLabel, language, localizedPath } from '../lib/locale.js';
+import { notes } from '../lib/note-categories.js';
+import NoteTree from './NoteTree.astro';
+import PostList from './PostList.astro';
+
+const { current = notes } = Astro.props;
+const { lang, t } = language(Astro.url.pathname);
+const categoryTitle = current === notes ? t.allNotes : categoryLabel(current.name, lang);
+const posts = [...current.posts].sort((a, b) =>
+  (b.updated ?? b.date ?? '').localeCompare(a.updated ?? a.date ?? ''),
+);
+---
+<Site title={current === notes ? t.notes : categoryTitle + ' · ' + t.notes}>
+  <div class="page-head"><h1>{t.notes}</h1><p>{t.notesDescription}</p></div>
+  <div class="notes-browser">
+    <nav class="notes-folder-nav" aria-labelledby="notes-topics">
+      <h2 id="notes-topics">{t.topics}</h2>
+      <a href={localizedPath(notes.url, lang)} aria-current={current === notes ? 'page' : undefined}>{t.allNotes}</a>
+      <NoteTree children={notes.children} selected={current.url} />
+    </nav>
+    <section class="notes-results" aria-labelledby="notes-selection">
+      <div class="section-heading notes-heading">
+        <h2 id="notes-selection">{categoryTitle}</h2>
+        <span>{t.recentUpdates}</span>
+      </div>
+      <PostList posts={posts} showSection={false} showUpdated />
+    </section>
+  </div>
+</Site>

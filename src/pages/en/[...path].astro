@@ -1,0 +1,36 @@
+---
+import About from '../../views/About.astro';
+import Article from '../../views/Article.astro';
+import Home from '../../views/Home.astro';
+import Journal from '../../views/Journal.astro';
+import NotFound from '../../views/NotFound.astro';
+import NotesBrowser from '../../components/NotesBrowser.astro';
+import Posts from '../../views/Posts.astro';
+import Research from '../../views/Research.astro';
+import { posts } from '../../lib/content.js';
+import { categories } from '../../lib/note-categories.js';
+
+const pages = { home: Home, about: About, journal: Journal, research: Research, notes: NotesBrowser, posts: Posts, article: Article, '404': NotFound };
+
+export function getStaticPaths() {
+  return [
+    { params: { path: undefined }, props: { page: 'home' } },
+    ...['about', 'journal', 'research', 'notes', 'posts', '404'].map((page) => ({
+      params: { path: page },
+      props: { page },
+    })),
+    ...categories.map((current) => ({
+      params: { path: 'notes/' + current.path.join('/') },
+      props: { page: 'notes', current },
+    })),
+    ...posts.map((post) => ({
+      params: { path: 'posts/' + post.slug },
+      props: { page: 'article', post },
+    })),
+  ];
+}
+
+const { page, ...data } = Astro.props;
+const View = pages[page];
+---
+<View {...data} />

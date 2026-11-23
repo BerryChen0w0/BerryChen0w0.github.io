@@ -1,0 +1,46 @@
+---
+import Site from '../layouts/Site.astro';
+import PostList from '../components/PostList.astro';
+import { language, localizedPath } from '../lib/locale.js';
+import { published } from '../lib/content.js';
+const { lang, english, t } = language(Astro.url.pathname);
+const feature = published.find((post) => post.slug === 'R1CS-to-QAP');
+const recent = published.filter((post) => post !== feature).slice(0, 5);
+---
+<Site>
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>Berry Chen<span>.</span></h1>
+      <p>{english ? "Embrace every moment and enjoy the journey!" : <>记录学到的东西，<br class="hero-break" />也记录生活里的小事。</>}</p>
+      <div class="hero-actions">
+        <a class="button primary" href={localizedPath('/notes/', lang)}>{english ? 'Read notes' : '读学习笔记'}</a>
+        <a class="button plain" href={localizedPath('/journal/', lang)}>{english ? t.journal : '读随笔'}</a>
+        <a class="button plain" href={localizedPath('/about/', lang)}>{english ? 'About me' : '关于我'}</a>
+      </div>
+    </div>
+    <div class="portrait-frame">
+      <img src="/assets/img/avatar.png" alt={english ? 'Berry Chen’s avatar' : 'Berry Chen 的头像'} width="240" height="240" fetchpriority="high" />
+    </div>
+  </section>
+
+  {feature && (
+    <section class="home-section" aria-labelledby="featured">
+      <div class="section-heading"><h2 id="featured">{english ? 'Featured note' : '精选笔记'}</h2></div>
+      <a class="feature" href={localizedPath(feature.url, lang)}>
+        <div class="feature-copy">
+          <h3>{english ? 'R1CS and QAP' : feature.title}</h3>
+          <p>{english ? 'How an arithmetic circuit becomes a system of matrix constraints and then a polynomial representation.' : '从一个算术电路出发，看它如何写成矩阵约束，又如何转成多项式。'}</p>
+          <span class="feature-action">{english ? 'Read in Chinese' : '阅读笔记'}</span>
+        </div>
+        <div class="feature-image">
+          <img src="/assets/img/电路/算术电路-标注变量.png" alt={english ? 'Arithmetic circuit with labeled variables' : '带变量标注的算术电路图'} loading="lazy" />
+        </div>
+      </a>
+    </section>
+  )}
+
+  <section class="home-section" aria-labelledby="recent">
+    <div class="section-heading"><h2 id="recent">{english ? 'Recent posts' : '最近发布'}</h2><a href={localizedPath('/posts/', lang)}>{t.allPosts}</a></div>
+    <PostList posts={recent} />
+  </section>
+</Site>

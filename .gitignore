@@ -1,26 +1,11 @@
-# Bundler cache
-.bundle
-vendor
-Gemfile.lock
+# Build output and dependencies
+/node_modules/
+/.astro/
+/dist/
 
-# Jekyll cache
-.jekyll-cache
-.jekyll-metadata
-_site
+# Local drafts
+/_drafts/
+/_drafts-local/
+/.chirpy-assets-local/
 
-# RubyGems
-*.gem
-
-# NPM dependencies
-node_modules
-package-lock.json
-
-# IDE configurations
-.idea
-.vscode
-!.vscode/settings.json
-!.vscode/extensions.json
-
-# Misc
-_sass/dist
-assets/js/dist
+.DS_Store

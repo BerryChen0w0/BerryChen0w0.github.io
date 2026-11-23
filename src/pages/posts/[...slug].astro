@@ -1,0 +1,11 @@
+---
+import Article from '../../views/Article.astro';
+import { posts } from '../../lib/content.js';
+
+export function getStaticPaths() {
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+---
+<Article post={post} />

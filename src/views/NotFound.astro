@@ -1,0 +1,13 @@
+---
+import Site from '../layouts/Site.astro';
+import { language, localizedPath } from '../lib/locale.js';
+
+const { lang, english, t } = language(Astro.url.pathname);
+const title = english ? 'Page not found' : '页面未找到';
+---
+<Site title={title} missing>
+  <div class="page-head">
+    <h1>{title}</h1>
+    <p><a href={localizedPath('/posts/', lang)}>{t.allPosts}</a> · <a href={localizedPath('/', lang)}>{t.home}</a></p>
+  </div>
+</Site>
